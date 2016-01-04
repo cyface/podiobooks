@@ -30,11 +30,10 @@ style-*_.css
 mediabrute_usefile
 *conflicted\ copy*
 .codeintel/*
-*/staticroot/admin/*
-*/staticroot/adminactions/*
-*/staticroot/css/*
-*/staticroot/debug_toolbar/*
-*/staticroot/images/*
-*/staticroot/js/*
-*/staticroot/swf/*
-*/mediaroot/images/covers/
+podiobooks/staticroot/*
+!podiobooks/staticroot/README.txt
+podiobooks/mediaroot/*
+!podiobooks/mediaroot/README.txt
+podiobooks/core/fixtures/alldata.json.zip
+logs/*
+!logs/README.txt

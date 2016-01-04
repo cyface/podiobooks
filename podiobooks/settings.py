@@ -21,7 +21,6 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 # List of Admin users to be emailed by error system
 MANAGERS = ()
@@ -49,30 +48,32 @@ STATIC_ROOT = PROJECT_ROOT + "/staticroot/"
 ACCEL_REDIRECT = False
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, "themes", THE_THEME, "static"), ]
-TEMPLATE_DIRS = [os.path.join(PROJECT_ROOT, "themes", THE_THEME, 'templates'), ]
 LOCALIZED_COVER_PLACEHOLDER = STATIC_URL + "images/cover-placeholder.jpg"
 USE_COVER_PLACEHOLDERS_ONLY = False
 
 # URL to Use for Feeds
 FEED_URL = ""  # This will be overridden in prod conf with an alt protocol/domain
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-
-# List of callables that add their data to each template
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.debug',
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'podiobooks.core.context_processors.js_api_keys',
-    'podiobooks.core.context_processors.current_site',
-    'podiobooks.core.context_processors.feed_settings',
-    'django.core.context_processors.request',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(PROJECT_ROOT, "themes", 'pb2-jq', 'templates'), ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'podiobooks.core.context_processors.current_site',
+                'django.template.context_processors.debug',
+                'podiobooks.core.context_processors.feed_settings',
+                'podiobooks.core.context_processors.js_api_keys',
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                'django.template.context_processors.static',
+            ],
+            'debug': DEBUG,
+        },
+    }
+]
 
 MIDDLEWARE_CLASSES = (
     'podiobooks.core.middleware.StripAnalyticsCookies',
@@ -116,6 +117,8 @@ INSTALLED_APPS = (
     'podiobooks.ratings',
 )
 
+WSGI_APPLICATION = 'podiobooks.wsgi.application'
+
 ### DATABASE SETTINGS
 DATABASES = {
     'default': {
@@ -130,7 +133,24 @@ DATABASES = {
 }
 FIXTURE_DIRS = {os.path.join(PROJECT_ROOT, "..", "..", "podiobooks_data")}
 
-### CACHE SETTINGS
+# Password validation
+# https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+# Cache Settings
 CACHES = {
     # 'default': {
     #     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
@@ -176,6 +196,7 @@ socket.setdefaulttimeout(2)  # 2 second timeout for grabbing feed
 
 ### DEBUG TOOLBAR
 if DEBUG:
+    DEBUG_TOOLBAR_PATCH_SETTINGS = False
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
     INTERNAL_IPS = ('127.0.0.1',)
     INSTALLED_APPS += ('debug_toolbar',)

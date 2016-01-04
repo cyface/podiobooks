@@ -17,7 +17,6 @@ if "GONDOR_DATABASE_URL" in os.environ:
     DB_URL = urlparse.urlparse(os.environ["GONDOR_DATABASE_URL"])
     DATABASES = {
         "default": {
-            # "ENGINE": 'django_pgpooler',
             "ENGINE": 'django.db.backends.postgresql_psycopg2',
             "NAME": DB_URL.path[1:],
             "USER": DB_URL.username,
@@ -25,11 +24,6 @@ if "GONDOR_DATABASE_URL" in os.environ:
             "HOST": DB_URL.hostname,
             "PORT": DB_URL.port
         }
-    }
-    DATABASE_POOL_ARGS = {
-        'max_overflow': int(os.environ["DB_POOL_OVERFLOW"]),
-        'pool_size': int(os.environ["DB_POOL_SIZE"]),
-        'recycle': int(os.environ["DB_POOL_TIMEOUT"]),
     }
 
 if "GONDOR_REDIS_URL" in os.environ:
@@ -66,7 +60,6 @@ if "GONDOR_REDIS_URL" in os.environ:
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'x_robots_tag_middleware.middleware.XRobotsTagMiddleware',
-#        'podiobooks.feeds.middleware.ga_tracking.GATracker',
         'podiobooks.feeds.middleware.redirect_exception.RedirectException',
         'django.middleware.cache.UpdateCacheMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -157,7 +150,7 @@ LOGGING = {
     'handlers': {
         'null': {
             'level': 'DEBUG',
-            'class': 'django.utils.log.NullHandler',
+            'class': 'logging.NullHandler',
         },
         'console': {
             'level': 'DEBUG',

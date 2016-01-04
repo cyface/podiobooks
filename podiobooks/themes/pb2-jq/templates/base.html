@@ -1,4 +1,4 @@
-<!DOCTYPE html>{% load static from staticfiles %}{% load mub_tags %}
+<!DOCTYPE html>{% load static from staticfiles %}{% load mub_tags %}{% url 'home_page' as HOME_URL %}
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -41,17 +41,16 @@
     {% block head %}{% endblock %}
 
     <script type="text/javascript">
-    	var pgw = 1000;
+        var pgw = 1000;
 
-    	if (window.innerWidth){
-    		pgw = parseInt(window.innerWidth);
-    	}
+        if (window.innerWidth) {
+            pgw = parseInt(window.innerWidth);
+        }
 
     </script>
 </head>
 
 <body class='{% block body_class %}{% endblock %}{% if debug %} debug{% endif %}'>
-{% url 'home_page' as HOME_URL %}
 <a href="#page-content" class="jump-to-content">Go to Page Content</a>
 <header class="head width clearfix">
 
@@ -59,9 +58,7 @@
     {% block header %}
         {% load global_templatetags %}<!-- Header - Logo and Navigation Bar -->
 
-        {% url 'podiobooks.main.views.index' as 'home_url' %}
-
-        {% if request.path == home_url %}
+        {% if request.path == HOME_URL %}
             <h1 class='hidden'><a href='{{ HOME_URL }}'>Podiobooks</a></h1>
         {% endif %}
 
@@ -121,10 +118,6 @@
 <script src="http://www.google.com/cse/cse.js?cx=014749959765467686078:giz6dgkgspe" type="text/javascript"></script>
 
 {% add_static "js" %}
-
-<!-- Sulvo Traffic Tag -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-P5LMWH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script id="sulvoTrafficTag" >(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\': new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=\'//www.googletagmanager.com/gtm.js?id=\'+i+dl;f.parentNode.insertBefore(j,f); })(window,document,\'script\',\'dataLayer\',\'GTM-P5LMWH\');</script>
-<!-- Sulvo Traffic Tag -->
 
 <!-- Get Satisfaction Widget -->
 <script type="text/javascript" charset="utf-8">
