@@ -31,6 +31,7 @@ class CoreUrlsTestCase(TestCase):
 
     def test_home(self):
         response = self.client.get('/')
+        print response
         self.assertEquals(200, response.status_code)
         self.assertNotContains(response, 'error')
         self.assertContains(response, 'Clipper')

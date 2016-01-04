@@ -1,20 +1,20 @@
 """Validates The Feeds"""
 
-from django.core.management.base import NoArgsCommand
-from podiobooks.core.models import Title
+from django.core.management.base import BaseCommand
 from django.contrib.sites.models import Site
 from django.contrib.syndication.views import add_domain
-import feedparser
 from django.core.urlresolvers import reverse_lazy
+import feedparser
+from podiobooks.core.models import Title
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     """
         Validates All Feeds
     """
     help = "Validates All Feeds"
 
-    def handle_noargs(self, **options):
+    def handle(self, **options):
         """Validates All the Feeds"""
         titles = Title.objects.filter(deleted=False)
         bad_titles = []

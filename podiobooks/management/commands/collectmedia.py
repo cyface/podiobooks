@@ -23,15 +23,15 @@ class Command(BaseCommand):
         else:
             raise CommandError("Local Media Path '{0}' does not exist".format(local_media))
 
-    def copy_dir(self, source_path, dest_path):
+    def copy_dir(self, local_path, dest_path):
         """
             Copy a whole directory to new path
 
-            :param source_path: source directory path
+            :param local_path: local codebase directory path
             :param dest_path: destination directory path
         """
-        for item in os.listdir(source_path):
-            item_path = os.path.join(source_path, item)
+        for item in os.listdir(local_path):
+            item_path = os.path.join(local_path, item)
             if os.path.isdir(item_path):
                 try:
                     os.mkdir(os.path.join(dest_path, item))
