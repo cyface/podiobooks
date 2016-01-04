@@ -3,7 +3,6 @@
 # pylint: disable=C0103,C0111,R0904
 
 from django.test import SimpleTestCase, TestCase
-from django.contrib.auth.models import User
 from podiobooks.core.models import Title
 from django.core.management import call_command
 from django.test.utils import override_settings
